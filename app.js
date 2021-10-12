@@ -7,9 +7,9 @@ const app           = express();
 
 dotenv.config();
 
-app.use(express.json());
 
-app.use('/auth',authRoute);
+
+
 
 if(process.env.NODE_ENV !== "test"){
     mongoose.connect(process.env.DB_CONNECT,
@@ -22,6 +22,8 @@ if(process.env.NODE_ENV !== "test"){
         }
     )
 }
+app.use(express.json());
+app.use('/auth',authRoute);
 
 
 module.exports      = app;
