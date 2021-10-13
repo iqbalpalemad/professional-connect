@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema(
         type : String,
         required : true
     },
+    name : {
+        type : String
+    },
     uuid : {
         type : String,
         required : true
