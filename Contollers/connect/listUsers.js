@@ -32,7 +32,7 @@ const listUsers = async (req,res) => {
         return res.status(200).json({result : true, message : list});
     }
     catch(err){
-        return res.status(500).json({result : false, message : err.message});
+        return res.status(400).json({result : false, message : err.message});
     }
 }
 
