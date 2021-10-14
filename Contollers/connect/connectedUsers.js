@@ -9,7 +9,8 @@ const connectedUsers = async (req,res) => {
                         {"$or"  : [{targetUserId : req.userId},{sourceUserId : req.userId}]}
                      ]
         })
-        .populate('sourceUserId','name email');
+        .populate('sourceUserId','name email')
+        .populate('targetUserId','name email');
         return res.status(200).json({result : true, message : requests});
     }
     catch(err){

@@ -11,8 +11,8 @@ const signup = async (req,res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({result : false, errors: errors.array() })
     }
-
-    if(checkEmailTaken(req.body.email)){
+    const emailTaken = await checkEmailTaken(req.body.email)
+    if(emailTaken){
         return res.status(400).json({result : false, errors: "Email address already taken" })
     }
 
@@ -20,6 +20,7 @@ const signup = async (req,res) => {
         const passwordHash = await bcrypt.hash(req.body.password,12);
         const user = new User({
             email : req.body.email,
+            name : req.body.name,
             password : passwordHash,
             uuid : uuidv4()
         });
@@ -39,8 +40,9 @@ const signup = async (req,res) => {
 const checkEmailTaken = async (email) => {
     try{
         const user = await User.findOne({email : email});
-        if(user)
+        if(user){
             return true;
+        }
         return false;
     }
     catch(err){

@@ -4,10 +4,22 @@ const mongoose      = require('mongoose');
 
 const authRoute     = require('./Routes/auth')
 const connectRoute  = require('./Routes/connect')
+const cors          = require('cors');
+const {incomingMessageHandler} = require('./Chat/chatHandler')
+
 const app           = express();
-
+var http            = require('http');
+const server        = http.createServer(app);
+const io            = require("socket.io")(server, {
+                        cors: {
+                        origin: "*",
+                        methods: ["GET", "POST"]
+                        }
+                    });
 dotenv.config();
-
+app.use(cors({
+    origin: '*'
+}));
 
 
 
@@ -33,4 +45,11 @@ app.use((req, res, next) => {
     })
 })
 
-module.exports      = app;
+io.on('connection', (socket) =>{
+    socket.on('chatMessage', msg => {
+        socket.broadcast.emit("chatMessage", msg);
+        incomingMessageHandler(msg);
+    });
+})
+
+module.exports      = server;

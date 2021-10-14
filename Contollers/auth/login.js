@@ -24,7 +24,7 @@ const login = async (req,res) => {
 
     const jwtSecret = process.env.JWT_SECRET;
     const jwtToken  = jwt.sign({id:user._id},jwtSecret,{expiresIn:'1d'})
-    return res.json({result : true, message : "Logged in successfully",token : jwtToken});
+    return res.json({result : true, message : "Logged in successfully",token : jwtToken,userId:user._id,name:user.name});
 }
 
 module.exports = login;

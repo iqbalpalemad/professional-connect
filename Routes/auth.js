@@ -11,9 +11,9 @@ const verify2fa         = require('../Contollers/auth/verify2fa');
 const validate          = require('../Validation/auth');
 const userAuth          = require('../Middleware/userAuth')
 
-router.post('/signup',validate.authValidate(),signup);
+router.post('/signup',validate.signupValidate(),signup);
 router.get('/verify/:uuid',verifyEmail)
-router.post('/login',validate.authValidate(),login);
+router.post('/login',validate.loginValidate(),login);
 router.post('/forgotpassword',validate.forgotPasswordValidate(),forgotPassword);
 router.post('/resetpassword/:uuid',validate.resetPassword(),resetPassword);
 router.post('/generate2fa',userAuth,generate2fa);
