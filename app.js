@@ -4,6 +4,7 @@ const mongoose      = require('mongoose');
 
 const authRoute     = require('./Routes/auth')
 const connectRoute  = require('./Routes/connect')
+const messageRoute  = require('./Routes/message')
 const cors          = require('cors');
 const {incomingMessageHandler} = require('./Chat/chatHandler')
 
@@ -38,6 +39,8 @@ if(process.env.NODE_ENV !== "test"){
 app.use(express.json());
 app.use('/auth',authRoute);
 app.use('/connection',connectRoute);
+app.use('/message',messageRoute);
+
 app.use((req, res, next) => {
     res.status(404).json({
         result  : false,
